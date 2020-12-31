@@ -1,4 +1,4 @@
-﻿using RMDataManager.Library.Internal.DataAccess;
+﻿using RMDataManager.Library.DataAccess;
 using RMDataManager.Library.Models;
 using System;
 using System.Collections.Generic;

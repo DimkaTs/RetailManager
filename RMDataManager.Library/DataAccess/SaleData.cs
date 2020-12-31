@@ -55,9 +55,6 @@ namespace RMDataManager.Library.DataAccess
 
             sale.Total = sale.SubTotal + sale.Tax;
 
-            
-            
-
             using (SqlDataAccess sql = new SqlDataAccess())
             {
                 try
@@ -86,18 +83,15 @@ namespace RMDataManager.Library.DataAccess
                     throw;
                 }
             }
-                
-
-            
         }
 
-        //public List<ProductModel> GetProducts()
-        //{
-        //    SqlDataAccess sql = new SqlDataAccess();
+        public List<SaleReportModel> GetSaleReport()
+        {
+            SqlDataAccess sql = new SqlDataAccess();
 
-        //    var output = sql.LoadData<ProductModel, dynamic>("dbo.spProduct_GetAll", new { }, "RMData");
+            var output = sql.LoadData<SaleReportModel, dynamic>("dbo.spSale_SaleReport", new { }, "RMData");
 
-        //    return output;
-        //}
+            return output;
+        }
     }
 }
