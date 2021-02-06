@@ -1,4 +1,5 @@
-﻿using RMDataManager.Library.Models;
+﻿using Microsoft.Extensions.Configuration;
+using RMDataManager.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,15 @@ namespace RMDataManager.Library.Internal.DataAccess
 {
     public class ProductData
     {
+        private readonly IConfiguration _config;
+
+        public ProductData(IConfiguration config)
+        {
+            _config = config;
+        }
         public List<ProductModel> GetProducts()
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(_config);
 
             var output = sql.LoadData<ProductModel, dynamic>("dbo.spProduct_GetAll", new { }, "RMData");
 
