@@ -24,6 +24,7 @@ namespace RMApi.Controllers
         }
 
         [Authorize(Roles = "Manager,Admin")] //Coma meaning "OR" relationship. Or Manager or Admin can Get this info
+        [HttpGet]
         public List<InventoryModel> Get()
         {
             InventoryData data = new InventoryData(_config);
@@ -32,6 +33,7 @@ namespace RMApi.Controllers
 
         //[Authorize(Roles = "WarehouseWorker")] Two lines meaning "AND". WarehouseWorker and Admin can Post the info
         [Authorize(Roles = "Admin")]
+        [HttpPost]
         public void Post(InventoryModel item)
         {
             InventoryData data = new InventoryData(_config);
