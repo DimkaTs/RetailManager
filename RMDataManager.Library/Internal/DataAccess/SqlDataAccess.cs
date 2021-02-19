@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace RMDataManager.Library.Internal.DataAccess
 {
-    internal class SqlDataAccess : IDisposable
+    public class SqlDataAccess : IDisposable, ISqlDataAccess
     {
         private readonly IConfiguration _config;
         public SqlDataAccess(IConfiguration config)
@@ -30,7 +30,7 @@ namespace RMDataManager.Library.Internal.DataAccess
             string connectionString = GetConnectionString(connectionStringName);
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
-                List<T> rows = connection.Query<T>(storeProcedure, parameters, 
+                List<T> rows = connection.Query<T>(storeProcedure, parameters,
                     commandType: CommandType.StoredProcedure).ToList();
                 return rows;
             }
@@ -51,7 +51,7 @@ namespace RMDataManager.Library.Internal.DataAccess
 
         public void StartTransaction(string connectionStringName)
         {
-             string connectionString = GetConnectionString(connectionStringName);
+            string connectionString = GetConnectionString(connectionStringName);
             _connection = new SqlConnection(connectionString);
             _connection.Open();
 
@@ -70,7 +70,7 @@ namespace RMDataManager.Library.Internal.DataAccess
 
         public void SaveDataInTransaction<T>(string storeProcedure, T parameters)
         {
-            _connection.Execute(storeProcedure, parameters, 
+            _connection.Execute(storeProcedure, parameters,
                 commandType: CommandType.StoredProcedure, transaction: _transaction);
         }
 
@@ -107,11 +107,5 @@ namespace RMDataManager.Library.Internal.DataAccess
             _transaction = null;
             _connection = null;
         }
-
-        //Open connect/start transaction method
-        //load using the transaction
-        //save using the transaction
-        //Close connection/stop transaction method
-        //Dispose
     }
 }
